@@ -1,0 +1,22 @@
+= Mautic Alpine
+
+== Introduction
+
+This repository contains files used to build and run a copy of the Mautic software on an Alpine docker image. It is a work in progress.
+
+== Building the Mautic Docker image
+
+. To build a Docker image containing Apache, PHP, and the Mautic software run the command `+docker build -t mautic-alpine:5.0.2 .+`
+. If you need to remove previously built images and containers all at once use the command `+docker system prune -a+` but be careful as this will remove everything (not just mautic-alpine)!
+
+== Setting Up the Mautic Docker 
+
+== Running the Mautic Docker
+
+. To run a test copy of the software use the `+docker compose -f mautic.yml up+` command. You can quit this with a CTRL+C
+. To run a copy of the software in the background use the `+docker compose -f mautic.yml up --detach+` command.
+. To stop a background copy of the software use the `+docker compose -f mautic.yml down+` command.
+
+== Configuration Notes
+
+== Future Work
