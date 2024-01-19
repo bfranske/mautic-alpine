@@ -1,9 +1,15 @@
 version: '3.8'
 
 services:
-   mautic:
-     container_name: mautic-alpine
-     image: mautic-alpine:5.0.2
-     ports:
-       - "${PORT:-8000}:80"
-     restart: unless-stopped
+  mautic:
+    container_name: mautic-alpine
+    image: mautic-alpine:5.0.2
+    ports:
+      - "${PORT:-8000}:80"
+    volumes:
+      - mautic-install:/var/www/mautic/
+      - mautic-docker-data:/mautic-docker-data/
+    restart: unless-stopped
+volumes:
+  mautic-install:
+  mautic-docker-data:
