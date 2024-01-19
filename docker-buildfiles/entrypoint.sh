@@ -17,6 +17,10 @@ if [ ! -f /mautic-docker-data/entrypointrunonce ]; then
     cd /var/www/mautic
     runuser -u apache -- composer require symfony/amazon-mailer 
 
+    # Install Doctrine Transport Database Queue
+    cd /var/www/mautic
+    runuser -u apache -- composer require symfony/doctrine-messenger
+
     touch /mautic-docker-data/entrypointrunonce
 fi
 
