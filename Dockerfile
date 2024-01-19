@@ -26,18 +26,39 @@ RUN apk --no-cache --update \
     php81-pdo_mysql \
     php81-xsl \
     php81-posix \
+    php81-phar \
+    php81-bcmath \
+    php81-gd \
+    php81-xmlreader \
+    php81-xmlwriter \
+    npm \
     bash \
     wget \
     unzip \
     runuser \
+    git \
     && mkdir -p /var/www/mautic
+
+#Setup php command
+RUN ln -s /usr/bin/php81 /usr/bin/php
+
+#Change PHP CLI Options
+RUN sed -i '/max_execution_time =/s/[0-9][0-9]*$/240/g' /etc/php81/php.ini
+RUN sed -i '/memory_limit =/s/[0-9][0-9][0-9]M*$/512M/g' /etc/php81/php.ini
 
 #Enable mod rewrite
 RUN sed -i '/LoadModule rewrite_module/s/^#//g' /etc/apache2/httpd.conf
 
-RUN wget https://github.com/mautic/mautic/releases/download/5.0.2/5.0.2.zip
-RUN chown -R apache:apache /var/www/mautic
-RUN runuser -u apache -- unzip 5.0.2.zip -d /var/www/mautic/
+# INSTALL COMPOSER
+COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
+
+# Install Mautic via composer
+RUN chown apache:apache /var/www
+RUN runuser -u apache -- composer create-project mautic/recommended-project:^5 /var/www/mautic --no-interaction
+
+#RUN wget https://github.com/mautic/mautic/releases/download/5.0.2/5.0.2.zip
+#RUN chown -R apache:apache /var/www/mautic
+#RUN runuser -u apache -- unzip 5.0.2.zip -d /var/www/mautic/
 
 
 COPY docker-buildfiles/mautic-apache.conf /etc/apache2/conf.d/
