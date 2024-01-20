@@ -1,0 +1,7 @@
+0,15,30,45 * * * * php81 /var/www/mautic/bin/console mautic:segments:update
+5,20,35,50 * * * * php81 /var/www/mautic/bin/console mautic:campaigns:update
+10,25,40,55 * * * * php81 /var/www/mautic/bin/console mautic:campaigns:trigger
+*/2 * * * * php81 /var/www/mautic/bin/console messenger:consume email
+*/3 * * * * php81 /var/www/mautic/bin/console mautic:social:monitoring
+*/4 * * * * php81 /var/www/mautic/bin/console mautic:import
+*/2 * * * * php81 /var/www/mautic/bin/console mautic:webhooks:process

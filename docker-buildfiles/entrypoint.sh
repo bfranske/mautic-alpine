@@ -25,5 +25,6 @@ if [ ! -f /mautic-docker-data/entrypointrunonce ]; then
 fi
 
 # Things to do everytime the container is launched
+cat /mautic-crontab >> /etc/crontabs/root
 crond
 /usr/sbin/httpd -D FOREGROUND

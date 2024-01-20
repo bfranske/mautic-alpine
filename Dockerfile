@@ -56,6 +56,8 @@ COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 #RUN chown -R apache:apache /var/www/mautic
 #RUN runuser -u apache -- unzip 5.0.2.zip -d /var/www/mautic/
 
+#Copy in crontab file
+COPY docker-buildfiles/mautic-crontab /
 
 COPY docker-buildfiles/mautic-apache.conf /etc/apache2/conf.d/
 
